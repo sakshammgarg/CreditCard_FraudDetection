@@ -91,11 +91,7 @@ cd CreditCard_FraudDetection
 
 ## Usage
 
-Run the notebook to explore the complete analysis:
-
-```bash
-jupyter notebook CreditCard_FraudDetection.ipynb
-```
+Run the notebook to explore the complete analysis.
 
 The notebook will:
 1. Load and explore the credit card transaction dataset
