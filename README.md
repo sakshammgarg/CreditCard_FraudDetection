@@ -35,8 +35,9 @@ The goal is to detect fraudulent credit card transactions using multiple machine
 
 ### 4. Data Splitting
 
-- 80–20 train–test split
-- Stratified split to preserve class distribution
+* 70–15–15 train–validation–test split
+* Stratified split to preserve class distribution
+* Validation set used for threshold optimization and undersampling ratio selection
 
 ### 5. Model Training
 
@@ -74,7 +75,7 @@ Models are evaluated using fraud-focused metrics:
 - **Random Forest with SMOTE** achieves the highest recall and strongest fraud detection capability
 - **Random Forest with Undersampling** provides the best balance between precision and recall
 - Logistic Regression performs reasonably but is consistently outperformed by Random Forest
-- Most influential features across models: **V14, V17, V12, V10, V11**
+- Most influential features across models: **V14, V10, V4, V12, V17**
 
 ## Model Selection & Recommendations
 
