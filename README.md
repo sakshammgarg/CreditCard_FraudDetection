@@ -1,146 +1,188 @@
-# Credit Card Fraud Detection Model
+Credit Card Fraud Detection Model
 
-This project focuses on detecting fraudulent credit card transactions using machine learning on a highly imbalanced dataset. The dataset includes both legitimate and fraudulent transactions, with fraudulent transactions being significantly less frequent.
+This project focuses on detecting fraudulent credit card transactions using machine learning on a highly imbalanced dataset, where fraudulent transactions account for only 0.17% of all records. The project emphasizes correct handling of class imbalance, fraud-focused evaluation metrics, and comparative analysis of multiple modeling strategies.
 
-## Project Description
+⸻
 
-This project aims to detect fraudulent credit card transactions using multiple machine learning techniques on a highly imbalanced dataset. The dataset contains a mix of legitimate and fraudulent transactions, where fraudulent transactions represent only 0.17% of all transactions. The project compares various sampling strategies and algorithms to achieve optimal fraud detection performance.
+Project Description
 
-## Key Steps
+This project aims to detect fraudulent credit card transactions using multiple machine learning techniques on a real-world, highly imbalanced dataset. It compares different sampling strategies and models to identify approaches that maximize fraud detection while maintaining reasonable false-positive rates.
 
-### 1) Data Loading and Exploration
-- Load the dataset (`creditcard.csv`) into a Pandas DataFrame
-- Inspect the dataset's structure and check for missing values
-- Analyze the distribution of legitimate (0) and fraudulent (1) transactions
-- Perform statistical analysis on transaction amounts for both classes
+⸻
 
-### 2) Data Preprocessing
-- Handle missing values by removing incomplete records
-- Separate the dataset into legitimate and fraudulent transaction DataFrames
-- Address class imbalance through two approaches:
-  - **Random Undersampling**: Reduces majority class to match minority class
-  - **SMOTE (Synthetic Minority Over-sampling Technique)**: Creates synthetic fraud samples
+Key Steps
 
-### 3) Feature and Target Separation
-- Define features (X) by excluding the `Class` column
-- Define the target (Y) as the `Class` column
-- Features include: Time, Amount, and V1-V28 (PCA-transformed anonymized features)
+1) Data Loading and Exploration
+	•	Load the dataset (creditcard.csv) into a Pandas DataFrame
+	•	Inspect dataset structure and check for missing values
+	•	Analyze class imbalance between legitimate (0) and fraudulent (1) transactions
+	•	Perform statistical analysis on transaction amounts
 
-### 4) Data Splitting
-- Split the data into training and testing sets (80-20 split)
-- Use stratification to maintain class distribution in both sets
+⸻
 
-### 5) Model Training
-Train multiple machine learning models:
-- **Logistic Regression**: Simple, interpretable baseline model
-- **Random Forest**: Ensemble method for capturing complex patterns
+2) Data Preprocessing
+	•	Remove incomplete records (if any)
+	•	Separate legitimate and fraudulent transactions
+	•	Address class imbalance using:
+	•	Random Undersampling: Reduces majority class size
+	•	SMOTE (Synthetic Minority Over-sampling Technique): Generates synthetic fraud samples
 
-Each model is trained with both undersampling and SMOTE techniques for comparison.
+⸻
 
-### 6) Model Evaluation
-Evaluate models using comprehensive metrics:
-- **Accuracy**: Overall correctness of predictions
-- **Precision**: Proportion of predicted frauds that are actual frauds
-- **Recall**: Proportion of actual frauds that are detected (most critical)
-- **F1-Score**: Harmonic mean of precision and recall
-- **ROC-AUC**: Model's ability to discriminate between classes
-- **Confusion Matrix**: Detailed breakdown of predictions
+3) Feature and Target Separation
+	•	Features (X): All columns except Class
+	•	Target (Y): Class
+	•	Features include:
+	•	Time, Amount
+	•	V1–V28 (PCA-transformed, anonymized features)
 
-## Results
+⸻
 
-The project demonstrates highly effective fraud detection across multiple approaches:
+4) Data Splitting
+	•	80–20 train–test split
+	•	Stratified split to preserve class distribution
 
-**Key Findings:**
-- Random Forest with SMOTE provides the best overall performance
-- High recall rates across all models ensure fraudulent transactions are caught
-- Top important features identified: V14, V17, V12, V10, V11
+⸻
 
-## Dataset
+5) Model Training
 
-**Source**: [Kaggle - Credit Card Fraud Detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud)
+The following models are trained using both sampling strategies:
+	•	Logistic Regression
+	•	Simple and interpretable baseline
+	•	Random Forest
+	•	Ensemble model capable of capturing complex patterns
 
-## Dependencies
+This results in four model–sampling combinations:
+	•	LR + Undersampling
+	•	LR + SMOTE
+	•	RF + Undersampling
+	•	RF + SMOTE
 
-The project requires the following Python libraries:
+⸻
 
-```bash
+6) Model Evaluation
+
+Models are evaluated using fraud-focused metrics:
+	•	Accuracy (reported for completeness)
+	•	Precision (false-alarm control)
+	•	Recall (most critical for fraud detection)
+	•	F1-Score (balanced performance metric)
+	•	ROC-AUC
+	•	Confusion Matrix
+
+Threshold optimization is applied to maximize F1-score, ensuring fair evaluation across imbalanced data distributions.
+
+⸻
+
+Results
+
+Key Findings
+	•	Random Forest with SMOTE achieves the highest recall and overall fraud detection capability
+	•	Random Forest with Undersampling provides the most balanced trade-off between precision and recall
+	•	Logistic Regression performs reasonably but is consistently outperformed by Random Forest
+	•	Most influential features across models:
+	•	V14, V17, V12, V10, V11
+
+⸻
+
+Model Selection & Recommendations
+
+1. Best Model Selection
+	•	Maximum Fraud Detection (Recall): Random Forest + SMOTE
+	•	Balanced Performance (F1-score): Random Forest + Undersampling
+	•	Fast & Interpretable Baseline: Logistic Regression + Undersampling
+	•	Production Benchmark: Random Forest models
+
+⸻
+
+2. Key Insights
+	•	Random Forest consistently outperforms Logistic Regression
+	•	SMOTE improves recall but may increase false positives
+	•	Undersampling offers better precision stability
+	•	Threshold tuning significantly improves F1-score across models
+	•	PCA-based features (V14, V17, V12, V10) dominate fraud detection
+
+⸻
+
+3. Production Considerations
+	•	Monitor data drift and retrain periodically
+	•	Adjust decision thresholds based on business cost sensitivity
+	•	Perform A/B testing before deploying new models
+	•	Maintain explainability for compliance and audit requirements
+	•	Implement alerting mechanisms for flagged transactions
+
+⸻
+
+4. Next Steps / Future Improvements
+	•	Hyperparameter tuning (GridSearchCV / RandomizedSearchCV)
+	•	Try advanced models (XGBoost, LightGBM)
+	•	Cost-sensitive learning with asymmetric penalties
+	•	Ensemble methods combining multiple models
+	•	Real-time inference pipeline
+	•	Model monitoring and automated retraining
+
+⸻
+
+Dataset
+
+Source:
+Kaggle – Credit Card Fraud Detection￼
+
+⸻
+
+Dependencies
+
 numpy
 pandas
 scikit-learn
 imbalanced-learn
-```
 
-Install the dependencies using:
+Install with:
 
-```bash
 pip install numpy pandas scikit-learn imbalanced-learn
-```
 
-## Installation
 
-1. **Clone the repository**
-```bash
+⸻
+
+Installation
+	1.	Clone the repository:
+
 git clone https://github.com/sakshammgarg/CreditCard_FraudDetection.git
 cd CreditCard_FraudDetection
-```
 
-2. **Download the dataset**
-   - Visit [Kaggle Dataset](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud)
-   - Download `creditcard.csv`
-   - Place it in the project root directory
+	2.	Download the dataset:
 
-## Usage
+	•	Visit Kaggle link above
+	•	Download creditcard.csv
+	•	Place it in the project root directory
 
-Run the notebook to explore the complete analysis.
+⸻
 
-The notebook will:
-1. Load and explore the credit card transaction dataset
-2. Preprocess data and handle class imbalance using undersampling and SMOTE
-3. Train Logistic Regression and Random Forest models
-4. Display comprehensive evaluation metrics for all model combinations
-5. Show feature importance analysis
-6. Provide model comparison summary and recommendations
+Usage
 
-## Project Structure
+Run the notebook to:
+	1.	Load and explore the dataset
+	2.	Handle class imbalance using undersampling and SMOTE
+	3.	Train Logistic Regression and Random Forest models
+	4.	Evaluate models using fraud-focused metrics
+	5.	Analyze feature importance
+	6.	Compare models and derive recommendations
 
-```
+⸻
+
+Project Structure
+
 CreditCard_FraudDetection/
 │
-├── CreditCard_FraudDetection.ipynb   # Main notebook
-├── creditcard.csv                    # Dataset (download separately)
-└── README.md                         # Project documentation
-```
+├── CreditCard_FraudDetection.ipynb
+├── creditcard.csv
+└── README.md
 
-## Model Selection Guide
 
-**For Production Deployment:**
-- **Maximum Fraud Detection**: Random Forest with SMOTE (highest recall)
-- **Balanced Performance**: Random Forest with SMOTE (best F1-score)
-- **Fast Predictions**: Logistic Regression with undersampling
-- **Minimal False Alarms**: Random Forest with undersampling (highest precision)
+⸻
 
-## Advanced Features
+Final Note
 
-This enhanced version includes:
-- Multiple sampling techniques comparison
-- Four different model-sampling combinations
-- Comprehensive evaluation metrics beyond accuracy
-- Feature importance analysis
-- Confusion matrix with detailed interpretation
-- Model comparison summary
-- Production deployment recommendations
+This project demonstrates that handling class imbalance correctly and evaluating models with appropriate metrics is more important than achieving high accuracy. By combining thoughtful sampling strategies, threshold optimization, and ensemble models, the system achieves robust and defensible fraud detection performance.
 
-## Future Improvements
-
-Potential enhancements for even better results:
-1. Implement XGBoost or LightGBM models
-2. Hyperparameter tuning using GridSearchCV
-3. Ensemble methods combining multiple models
-4. Cost-sensitive learning with weighted penalties
-5. Deep learning approaches (Neural Networks)
-6. Real-time fraud detection API
-7. Model monitoring and drift detection
-
----
-
-This project provides a robust and comprehensive approach to credit card fraud detection using machine learning, highlighting the importance of addressing class imbalance, using multiple evaluation metrics, and comparing different modeling approaches for optimal performance.
+⸻
